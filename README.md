@@ -32,15 +32,15 @@ The API follows RESTful principles including proper HTTP status codes, JSON repr
 
 ## Technology Stack
 
-| Component | Technology |
-|---|---|
-| Language | Java 11 |
-| API Framework | JAX-RS 2.1 (Jersey 2.41) |
-| JSON Serialisation | Jackson (via jersey-media-json-jackson) |
-| Build Tool | Apache Maven |
-| Data Storage | In-memory (`ConcurrentHashMap`, `ArrayList`) |
-| Application Server | Apache Tomcat 10.x |
-| Deployment | WAR (Web Application Archive) |
+| Component          | Technology                                   |
+| ------------------ | -------------------------------------------- |
+| Language           | Java 11                                      |
+| API Framework      | JAX-RS 2.1 (Jersey 2.41)                     |
+| JSON Serialisation | Jackson (via jersey-media-json-jackson)      |
+| Build Tool         | Apache Maven                                 |
+| Data Storage       | In-memory (`ConcurrentHashMap`, `ArrayList`) |
+| Application Server | Apache Tomcat 10.x                           |
+| Deployment         | WAR (Web Application Archive)                |
 
 ---
 
@@ -148,21 +148,21 @@ You should receive a JSON response with API metadata.
 
 ## API Endpoints
 
-| Method | Path | Description | Status Codes |
-|--------|------|-------------|--------------|
-| GET | `/api/v1` | API discovery & metadata | 200 |
-| GET | `/api/v1/rooms` | List all rooms | 200 |
-| POST | `/api/v1/rooms` | Create a new room | 201, 400, 409 |
-| GET | `/api/v1/rooms/{roomId}` | Get a specific room | 200, 404 |
-| PUT | `/api/v1/rooms/{roomId}` | Update room metadata (name, capacity) | 200, 404 |
-| DELETE | `/api/v1/rooms/{roomId}` | Delete a room (blocked if sensors present) | 200, 404, 409 |
-| GET | `/api/v1/sensors` | List all sensors (optional `?type=` filter) | 200 |
-| POST | `/api/v1/sensors` | Register a new sensor | 201, 400, 409, 422 |
-| GET | `/api/v1/sensors/{sensorId}` | Get a specific sensor | 200, 404 |
-| PUT | `/api/v1/sensors/{sensorId}` | Update sensor status/room (value update forbidden) | 200, 403, 404, 422 |
-| DELETE | `/api/v1/sensors/{sensorId}` | Delete a sensor and unlink from room | 200, 404 |
-| GET | `/api/v1/sensors/{sensorId}/readings` | Get sensor reading history | 200, 404 |
-| POST | `/api/v1/sensors/{sensorId}/readings` | Post a new reading (updates parent sensor value) | 201, 403, 404 |
+| Method | Path                                  | Description                                        | Status Codes       |
+| ------ | ------------------------------------- | -------------------------------------------------- | ------------------ |
+| GET    | `/api/v1`                             | API discovery & metadata                           | 200                |
+| GET    | `/api/v1/rooms`                       | List all rooms                                     | 200                |
+| POST   | `/api/v1/rooms`                       | Create a new room                                  | 201, 400, 409      |
+| GET    | `/api/v1/rooms/{roomId}`              | Get a specific room                                | 200, 404           |
+| PUT    | `/api/v1/rooms/{roomId}`              | Update room metadata (name, capacity)              | 200, 404           |
+| DELETE | `/api/v1/rooms/{roomId}`              | Delete a room (blocked if sensors present)         | 200, 404, 409      |
+| GET    | `/api/v1/sensors`                     | List all sensors (optional `?type=` filter)        | 200                |
+| POST   | `/api/v1/sensors`                     | Register a new sensor                              | 201, 400, 409, 422 |
+| GET    | `/api/v1/sensors/{sensorId}`          | Get a specific sensor                              | 200, 404           |
+| PUT    | `/api/v1/sensors/{sensorId}`          | Update sensor status/room (value update forbidden) | 200, 403, 404, 422 |
+| DELETE | `/api/v1/sensors/{sensorId}`          | Delete a sensor and unlink from room               | 200, 404           |
+| GET    | `/api/v1/sensors/{sensorId}/readings` | Get sensor reading history                         | 200, 404           |
+| POST   | `/api/v1/sensors/{sensorId}/readings` | Post a new reading (updates parent sensor value)   | 201, 403, 404      |
 
 ---
 
@@ -175,6 +175,7 @@ curl -X GET http://localhost:8080/smart-campus-api/api/v1
 ```
 
 **Expected Response (200):**
+
 ```json
 {
   "message": "Welcome to Smart Campus Sensor & Room Management API",
@@ -195,6 +196,7 @@ curl -X GET http://localhost:8080/smart-campus-api/api/v1/rooms
 ```
 
 **Expected Response (200):**
+
 ```json
 [
   {
@@ -227,6 +229,7 @@ curl -X POST http://localhost:8080/smart-campus-api/api/v1/rooms \
 ```
 
 **Expected Response (201 Created):**
+
 ```json
 {
   "id": "LAB-205",
@@ -249,6 +252,7 @@ curl -X PUT http://localhost:8080/smart-campus-api/api/v1/rooms/LAB-205 \
 ```
 
 **Expected Response (200 OK):**
+
 ```json
 {
   "id": "LAB-205",
@@ -275,6 +279,7 @@ curl -X POST http://localhost:8080/smart-campus-api/api/v1/sensors \
 ```
 
 **Expected Response (201 Created):**
+
 ```json
 {
   "id": "TEMP-002",
@@ -298,6 +303,7 @@ curl -X POST http://localhost:8080/smart-campus-api/api/v1/sensors/TEMP-002/read
 ```
 
 **Expected Response (201 Created):**
+
 ```json
 {
   "id": "550e8400-e29b-41d4-a716-446655440000",
@@ -315,6 +321,7 @@ curl -X GET "http://localhost:8080/smart-campus-api/api/v1/sensors?type=Temperat
 ```
 
 **Expected Response (200):**
+
 ```json
 [
   {
@@ -343,6 +350,7 @@ curl -X GET http://localhost:8080/smart-campus-api/api/v1/sensors/TEMP-002/readi
 ```
 
 **Expected Response (200):**
+
 ```json
 [
   {
@@ -367,6 +375,7 @@ curl -X DELETE http://localhost:8080/smart-campus-api/api/v1/rooms/LAB-205
 ```
 
 **Expected Response (409 Conflict):**
+
 ```json
 {
   "status": 409,
@@ -387,6 +396,7 @@ curl -X POST http://localhost:8080/smart-campus-api/api/v1/sensors/OCC-001/readi
 ```
 
 **Expected Response (403 Forbidden):**
+
 ```json
 {
   "status": 403,
@@ -413,6 +423,7 @@ curl -X POST http://localhost:8080/smart-campus-api/api/v1/sensors \
 ```
 
 **Expected Response (422 Unprocessable Entity):**
+
 ```json
 {
   "status": 422,
@@ -496,16 +507,17 @@ HTTP 415 is the standard status code indicating that the server refuses to accep
 
 **Q3.2: Contrast `@QueryParam` filtering with an alternative path-based design (e.g., /sensors/type/CO2). Why is the query parameter approach superior?**
 
-| Aspect | `@QueryParam` (`?type=CO2`) | Path-based (`/sensors/type/CO2`) |
-|---|---|---|
-| **Optionality** | Naturally optional — omitting the parameter returns all sensors | Would require a separate endpoint to get the complete unfiltered list |
-| **Composability** | Multiple filters naturally combine: `?type=CO2&status=ACTIVE&roomId=LAB-205` | Each combination requires a distinct path, leading to combinatorial explosion of routes |
+| Aspect                | `@QueryParam` (`?type=CO2`)                                                                               | Path-based (`/sensors/type/CO2`)                                                                    |
+| --------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| **Optionality**       | Naturally optional — omitting the parameter returns all sensors                                           | Would require a separate endpoint to get the complete unfiltered list                               |
+| **Composability**     | Multiple filters naturally combine: `?type=CO2&status=ACTIVE&roomId=LAB-205`                              | Each combination requires a distinct path, leading to combinatorial explosion of routes             |
 | **Resource Identity** | The base URL `/sensors` always identifies the same collection resource; filters adjust the representation | Each path variation implies a semantically distinct resource, which is incorrect for filtered views |
-| **HTTP Caching** | Query strings are naturally treated as cache keys by standard HTTP infrastructure | Path-based variants pollute the resource namespace and complicate cache invalidation |
-| **REST Convention** | Universally understood and adopted standard for searching, filtering, and pagination | Non-standard and deviates from REST conventions |
-| **Client Usability** | Intuitive for developers; query strings feel like "parameters" | Unclear semantics; clients may misunderstand these as separate resources |
+| **HTTP Caching**      | Query strings are naturally treated as cache keys by standard HTTP infrastructure                         | Path-based variants pollute the resource namespace and complicate cache invalidation                |
+| **REST Convention**   | Universally understood and adopted standard for searching, filtering, and pagination                      | Non-standard and deviates from REST conventions                                                     |
+| **Client Usability**  | Intuitive for developers; query strings feel like "parameters"                                            | Unclear semantics; clients may misunderstand these as separate resources                            |
 
 The query parameter approach is clearly superior because it:
+
 - Preserves clean RESTful resource semantics
 - Offers flexible, composable filtering
 - Follows established conventions
@@ -568,6 +580,7 @@ Exposing raw stack traces is classified under **CWE-209: Information Exposure Th
 5. **Business Logic Patterns:** Method names and call chains reveal internal execution flow, decision trees, and validation logic, helping attackers understand how to bypass security controls.
 
 Our `GlobalExceptionMapper` mitigates all these risks by:
+
 - Catching **any unhandled `Throwable`** before it reaches the client
 - **Logging the full stack trace server-side only** where it cannot be intercepted
 - **Returning only a generic, safe `ErrorResponse`** to the client with no technical details
@@ -601,11 +614,13 @@ Our `ApiLoggingFilter` demonstrates this by logging all incoming requests and ou
 The API includes pre-seeded demo data in the `DataStore` static initialiser block:
 
 **Rooms:**
+
 - `LIB-301` — Library Quiet Study (capacity: 50)
 - `LAB-101` — Computer Science Lab (capacity: 30)
 - `HALL-A` — Main Lecture Hall (capacity: 200)
 
 **Sensors:**
+
 - `TEMP-001` — Temperature sensor in LIB-301 (ACTIVE)
 - `CO2-001` — CO2 sensor in LIB-301 (ACTIVE)
 - `OCC-001` — Occupancy sensor in LAB-101 (MAINTENANCE)
@@ -613,10 +628,11 @@ The API includes pre-seeded demo data in the `DataStore` static initialiser bloc
 
 ---
 
-## Author & Coursework
+## Author
 
+- **Name:** Kithsara Medawewa
+- **UOW ID:** w2119877
+- **IIT ID:** 20240505
 - **Module:** 5COSC022W Client-Server Architectures
 - **University:** University of Westminster
 - **Academic Year:** 2025/26
-- **Submitted by:** [Your Name]
-
