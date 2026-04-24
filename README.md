@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Smart Campus Sensor & Room Management API
 
 A RESTful API built with **JAX-RS (Jersey 2.41)** deployed on **Apache Tomcat 10** for the University of Westminster "Smart Campus" initiative.
@@ -323,3 +324,7 @@ Using a JAX-RS filter (`ContainerRequestFilter` / `ContainerResponseFilter`) is 
 4. **Consistency** — Filters guarantee a uniform log structure across all endpoints. Manual calls rely on developer discipline, which degrades over time as new endpoints are added.
 5. **Request lifecycle access** — Filters intercept requests *before* the method runs and responses *after* it completes. This enables latency measurement (response time − request time) — impossible to do cleanly from inside a method body.
 6. **Cross-cutting concern design** — Logging, authentication, CORS, and rate-limiting are all cross-cutting concerns. JAX-RS filters are the idiomatic mechanism for these, keeping business code clean and focused.
+=======
+# SmartCampus-API
+SmartCampus - Sensor &amp; Room Management JAX-RS API
+>>>>>>> 30b43a8458a533e5c0374b6d4b90d84aa5aea480
